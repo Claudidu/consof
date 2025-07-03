@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONSOF - Nosotros</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tipografías y Colores del Brand Book */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFFFF;
+        }
+        .font-display { 
+            font-family: 'Teko', sans-serif;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .bg-consof-dark { background-color: #374548; }
+        .text-consof-dark { color: #374548; }
+        .bg-consof-orange { background-color: #F78D53; }
+        .text-consof-orange { color: #F78D53; }
+        .bg-consof-grey { background-color: #ADB9BA; }
+        .text-consof-grey { color: #ADB9BA; }
+        .border-consof-orange { border-color: #F78D53; }
+
+        /* Animaciones y transiciones */
+        .menu-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .hover-lift {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .hover-text-orange:hover {
+            color: #F78D53;
+        }
+    </style>
+</head>
+<body class="text-consof-dark">
+
+    <!-- MENÚ OVERLAY MÓVIL (Inicialmente oculto) -->
+    <div id="mobile-menu" class="menu-overlay fixed inset-0 bg-consof-dark z-50 flex-col items-center justify-center text-white hidden md:hidden">
+        <button id="menu-close-btn" class="absolute top-5 right-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+        <nav class="flex flex-col items-center space-y-8">
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Inicio</a>
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Nosotros</a>
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Servicios</a>
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Proyectos</a>
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Recursos</a>
+            <a href="#" class="font-display text-5xl bg-consof-orange text-white px-8 py-2 rounded-md mt-8">Contacto</a>
+        </nav>
+    </div>
+
+    <!-- HEADER RESPONSIVE (Reutilizado de la página de inicio) -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
+        <div class="container mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                 <svg width="40" height="40" viewBox="0 0 100 100" class="text-consof-dark h-8 w-8 md:h-10 md:w-10">
+                    <path fill="#374548" d="M50 80 L50 100 L40 100 L40 80 Z"></path><path fill="#374548" d="M25 65 L10 75 L18 85 L33 75 Z"></path><path fill="#374548" d="M20 50 L0 50 L0 40 L20 40 Z"></path><path fill="#374548" d="M25 35 L10 25 L18 15 L33 25 Z"></path><path fill="#F78D53" d="M50 20 L50 0 L60 0 L60 20 Z"></path><g transform="translate(70, 20)"><path fill="#374548" d="M15.31,0H9.69A3.13,3.13,0,0,0,6.56,3.13V5.62H18.44V3.13A3.13,3.13,0,0,0,15.31,0Z"></path><path fill="#374548" d="M25,8.75H0v3.12A3.13,3.13,0,0,0,3.13,15H21.88A3.13,3.13,0,0,0,25,11.88V8.75Z"></path></g>
+                </svg>
+                <span class="font-display text-3xl md:text-4xl text-consof-dark">CONSOF</span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="font-display text-xl tracking-wider hover-text-orange transition-colors">Inicio</a>
+                <a href="#" class="font-display text-xl tracking-wider text-consof-orange transition-colors">Nosotros</a>
+                <a href="#" class="font-display text-xl tracking-wider hover-text-orange transition-colors">Servicios</a>
+                <a href="#" class="font-display text-xl tracking-wider hover-text-orange transition-colors">Proyectos</a>
+                <a href="#" class="font-display text-xl tracking-wider hover-text-orange transition-colors">Recursos</a>
+            </nav>
+            <a href="#" class="hidden md:block bg-consof-orange text-white font-display text-xl px-6 py-2 rounded-md hover:bg-opacity-90 transition-all transform hover:scale-105">Contacto</a>
+            <button id="menu-open-btn" class="md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Contenido de la página "Nosotros" -->
+    <main>
+        <!-- HERO SECTION "NOSOTROS" -->
+        <section class="relative h-[50vh] min-h-[400px] flex items-center justify-center text-white bg-consof-dark">
+            <div class="absolute inset-0 opacity-20" style="background-image: url('https://placehold.co/1920x1080/374548/ADB9BA?text=Plano+Arquitectónico'); background-size: cover; background-position: center;"></div>
+            <div class="absolute inset-0 bg-black/40 z-10"></div>
+            <div class="z-20 text-center px-4">
+                <h1 class="font-display text-6xl md:text-8xl">Somos CONSOF</h1>
+                <p class="mt-2 text-xl md:text-2xl font-light">Diseñadores de lo posible. Constructores de lo significativo.</p>
+            </div>
+        </section>
+
+        <!-- MANIFIESTO DE MARCA -->
+        <section class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4 md:px-6 text-center max-w-4xl">
+                <h2 class="font-display text-5xl md:text-6xl text-consof-dark mb-6">Manifiesto</h2>
+                <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+                    En CONSOF entendimos que cada espacio fue una idea con potencial, una historia que esperaba ser contada. Por eso todo inicia buscando un concepto: una visión, una necesidad o un deseo para llevarlo al <strong class="text-consof-orange">concreto</strong>, a lo tangible, a lo funcional, a lo habitable.
+                </p>
+                <p class="mt-6 text-lg md:text-xl text-gray-700 leading-relaxed">
+                    <strong class="font-semibold">Del concepto al concreto</strong> es nuestra promesa, es el camino que recorremos junto a cada cliente, transformando ideas en experiencias, bocetos en estructuras y emociones en espacios con alma.
+                </p>
+            </div>
+        </section>
+
+        <!-- STORYTELLING SECTION -->
+        <section class="py-16 md:py-24">
+            <div class="container mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+                <div class="order-2 md:order-1">
+                    <h2 class="font-display text-4xl md:text-5xl text-consof-dark mb-6">Nuestra Historia</h2>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        Nuestra historia nace del deseo de crear lugares que se sientan únicos, que reflejen lo que son nuestros clientes y lo que desean transmitir al mundo.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Creemos que los espacios son manifestaciones vivas de una idea, una visión, una esencia. Es por eso que acompañamos cada proyecto desde el primer trazo hasta el último detalle, comprendiendo aquello que lo hace único y combinando técnica con sensibilidad, creatividad con ingeniería para crear espacios que se habitan, se recuerdan y se admiran.
+                    </p>
+                </div>
+                <div class="order-1 md:order-2">
+                    <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=2127&auto=format&fit=crop" alt="Interior de una sala de estar moderna, sobria y minimalista" class="rounded-lg shadow-xl w-full h-auto object-cover aspect-[4/3]">
+                </div>
+            </div>
+        </section>
+
+        <!-- VALORES / POR QUÉ ELEGIRNOS -->
+        <section class="py-16 md:py-24 bg-consof-dark text-white">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="font-display text-5xl md:text-6xl">Nuestros Pilares</h2>
+                    <p class="mt-2 text-lg text-consof-grey">La base de cada proyecto que emprendemos.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <!-- Valor 1: Calidad -->
+                    <div class="text-center">
+                        <div class="flex justify-center mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-consof-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                        <h3 class="font-display text-3xl mb-2">Calidad</h3>
+                        <p class="text-consof-grey">Desarrollamos procesos constructivos y arquitectónicos de máxima calidad, utilizando los mejores materiales para lograrlo.</p>
+                    </div>
+                    <!-- Valor 2: Cumplimiento -->
+                    <div class="text-center">
+                        <div class="flex justify-center mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-consof-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg></div>
+                        <h3 class="font-display text-3xl mb-2">Cumplimiento</h3>
+                        <p class="text-consof-grey">Entendemos las dinámicas de nuestros clientes, adaptándonos para dar cumplimiento al alcance y los tiempos de cada proyecto.</p>
+                    </div>
+                    <!-- Valor 3: Servicio -->
+                    <div class="text-center">
+                        <div class="flex justify-center mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-consof-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V4a2 2 0 012-2h8a2 2 0 012 2v4z" /></svg></div>
+                        <h3 class="font-display text-3xl mb-2">Servicio</h3>
+                        <p class="text-consof-grey">Las buenas relaciones son fundamentales. El servicio es nuestro factor determinante para construir confianza duradera.</p>
+                    </div>
+                    <!-- Valor 4: Garantía -->
+                    <div class="text-center">
+                        <div class="flex justify-center mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-consof-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg></div>
+                        <h3 class="font-display text-3xl mb-2">Garantía</h3>
+                        <p class="text-consof-grey">Brindamos acompañamiento y respaldo antes, durante y después de la ejecución de las obras para tu total tranquilidad.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA FINAL -->
+        <section class="bg-consof-orange text-white">
+            <div class="container mx-auto px-4 md:px-6 py-16 md:py-20 text-center">
+                <h2 class="font-display text-4xl md:text-6xl">Veamos cómo lo hacemos</h2>
+                <p class="mt-2 md:mt-4 text-xl md:text-2xl mb-6 md:mb-8">Explora los proyectos que hemos traído del concepto al concreto.</p>
+                <a href="#" class="bg-white text-consof-orange font-display text-xl md:text-2xl px-10 md:px-12 py-3 md:py-4 rounded-md hover:bg-gray-100 transition-colors transform hover:scale-105 inline-block">
+                    Ver Proyectos
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER (Reutilizado de la página de inicio) -->
+    <footer class="bg-consof-dark text-consof-grey">
+        <div class="container mx-auto px-4 md:px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+            <div class="md:col-span-1"><div class="flex justify-center md:justify-start items-center space-x-2 mb-4"><svg width="24" height="24" viewBox="0 0 100 100" class="text-white"><path fill="#FFFFFF" d="M50 80 L50 100 L40 100 L40 80 Z"></path><path fill="#FFFFFF" d="M25 65 L10 75 L18 85 L33 75 Z"></path><path fill="#FFFFFF" d="M20 50 L0 50 L0 40 L20 40 Z"></path><path fill="#FFFFFF" d="M25 35 L10 25 L18 15 L33 25 Z"></path><path fill="#F78D53" d="M50 20 L50 0 L60 0 L60 20 Z"></path><g transform="translate(70, 20)"><path fill="#FFFFFF" d="M15.31,0H9.69A3.13,3.13,0,0,0,6.56,3.13V5.62H18.44V3.13A3.13,3.13,0,0,0,15.31,0Z"></path><path fill="#FFFFFF" d="M25,8.75H0v3.12A3.13,3.13,0,0,0,3.13,15H21.88A3.13,3.13,0,0,0,25,11.88V8.75Z"></path></g></svg><span class="font-display text-2xl text-white">CONSOF</span></div><p class="text-sm">Transformando ideas en espacios con alma. Del concepto al concreto.</p></div>
+            <div><h4 class="font-display text-xl text-white mb-4">Explorar</h4><ul class="space-y-2 text-sm"><li><a href="#" class="hover-text-orange transition-colors">Nosotros</a></li><li><a href="#" class="hover-text-orange transition-colors">Servicios</a></li><li><a href="#" class="hover-text-orange transition-colors">Proyectos</a></li></ul></div>
+            <div><h4 class="font-display text-xl text-white mb-4">Contacto</h4><ul class="space-y-2 text-sm"><li>Sede: Medellín, Colombia</li><li>gerencia@consof.com.co</li><li>Lun - Vie, 8am - 5pm</li></ul></div>
+            <div><h4 class="font-display text-xl text-white mb-4">Síguenos</h4><div class="flex justify-center md:justify-start space-x-4"><a href="#" class="text-consof-grey hover:text-white transition-colors">[Be]</a><a href="#" class="text-consof-grey hover:text-white transition-colors">[In]</a><a href="#" class="text-consof-grey hover:text-white transition-colors">[Ig]</a></div></div>
+        </div>
+         <div class="border-t border-white/10 mt-8"><div class="container mx-auto px-6 py-6 text-center text-xs"><p>&copy; 2025 CONSOF. Todos los derechos reservados.</p></div></div>
+    </footer>
+    
+    <script>
+        // Script para la funcionalidad del menú móvil
+        const openMenuBtn = document.getElementById('menu-open-btn');
+        const closeMenuBtn = document.getElementById('menu-close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        openMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+        });
+    </script>
+
+</body>
+</html>
