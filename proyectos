@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONSOF - Proyectos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tipografías y Colores del Brand Book */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9FAFB;
+        }
+        .font-display { 
+            font-family: 'Teko', sans-serif;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .bg-consof-dark { background-color: #374548; }
+        .text-consof-dark { color: #374548; }
+        .bg-consof-orange { background-color: #F78D53; }
+        .text-consof-orange { color: #F78D53; }
+        
+        /* Estilos para el Mosaico y Modal */
+        .project-card img {
+            transition: transform 0.4s ease;
+        }
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+        .modal-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-consof-dark">
+
+    <!-- MENÚ OVERLAY MÓVIL (Reutilizado) -->
+    <div id="mobile-menu" class="menu-overlay fixed inset-0 bg-consof-dark z-[100] flex-col items-center justify-center text-white hidden md:hidden">
+        <button id="menu-close-btn" class="absolute top-5 right-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+        <nav class="flex flex-col items-center space-y-8">
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Inicio</a>
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Nosotros</a>
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Servicios</a>
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Proyectos</a>
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Recursos</a>
+            <a href="#" class="font-display text-5xl bg-consof-orange text-white px-8 py-2 rounded-md mt-8">Contacto</a>
+        </nav>
+    </div>
+
+    <!-- HEADER RESPONSIVE (Reutilizado) -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
+        <div class="container mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                 <svg width="40" height="40" viewBox="0 0 100 100" class="text-consof-dark h-8 w-8 md:h-10 md:w-10">
+                    <path fill="#374548" d="M50 80 L50 100 L40 100 L40 80 Z"></path><path fill="#374548" d="M25 65 L10 75 L18 85 L33 75 Z"></path><path fill="#374548" d="M20 50 L0 50 L0 40 L20 40 Z"></path><path fill="#374548" d="M25 35 L10 25 L18 15 L33 25 Z"></path><path fill="#F78D53" d="M50 20 L50 0 L60 0 L60 20 Z"></path><g transform="translate(70, 20)"><path fill="#374548" d="M15.31,0H9.69A3.13,3.13,0,0,0,6.56,3.13V5.62H18.44V3.13A3.13,3.13,0,0,0,15.31,0Z"></path><path fill="#374548" d="M25,8.75H0v3.12A3.13,3.13,0,0,0,3.13,15H21.88A3.13,3.13,0,0,0,25,11.88V8.75Z"></path></g>
+                </svg>
+                <span class="font-display text-3xl md:text-4xl text-consof-dark">CONSOF</span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#" class="font-display text-xl tracking-wider hover:text-orange-500 transition-colors">Inicio</a>
+                <a href="#" class="font-display text-xl tracking-wider hover:text-orange-500 transition-colors">Nosotros</a>
+                <a href="#" class="font-display text-xl tracking-wider hover:text-orange-500 transition-colors">Servicios</a>
+                <a href="#" class="font-display text-xl tracking-wider text-consof-orange transition-colors">Proyectos</a>
+                <a href="#" class="font-display text-xl tracking-wider hover:text-orange-500 transition-colors">Recursos</a>
+            </nav>
+            <a href="#" class="hidden md:block bg-consof-orange text-white font-display text-xl px-6 py-2 rounded-md hover:bg-opacity-90 transition-all transform hover:scale-105">Contacto</a>
+            <button id="menu-open-btn" class="md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Contenido de la página "Proyectos" -->
+    <main>
+        <!-- HERO SECTION "PROYECTOS" -->
+        <section class="relative h-[50vh] min-h-[400px] flex items-center justify-center text-white bg-consof-dark">
+            <div class="absolute inset-0 opacity-20" style="background-image: url('https://raw.githubusercontent.com/Claudidu/consof/main/images/haz%20una%20imagenpara%20un%20%20Banner%20(Hero)%20donde%20se%20muestre%20Un%20equipo%20de%20profesionales%20colaborando%20sobre%20planos%20arquitect%C3%B3nicos%2C%20reflejando%20el%20concepto%20y%20la%20planeaci%C3%B3n.%20con%20Medidas%201920%20x%201080%20p.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="absolute inset-0 bg-black/40 z-10"></div>
+            <div class="z-20 text-center px-4">
+                <h1 class="font-display text-6xl md:text-8xl">Proyectos con Alma</h1>
+                <p class="mt-2 text-xl md:text-2xl font-light">La evidencia de nuestro compromiso: del concepto al concreto.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE PROYECTOS EN MOSAICO -->
+        <section class="py-16 md:py-24">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="font-display text-5xl md:text-6xl text-consof-dark">Nuestro Portafolio</h2>
+                    <p class="mt-4 text-lg text-gray-600">Explora algunos de los proyectos que hemos transformado.</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- Proyecto 1 -->
+                    <div class="project-card col-span-2 md:col-span-1 lg:row-span-2 cursor-pointer group relative rounded-lg overflow-hidden shadow-lg"
+                         data-img="https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                         data-title="Oficinas Corporativas Innovatec"
+                         data-client="Para Grupo Éxito"
+                         data-description="Remodelación integral de 5,000 m² de oficinas corporativas, creando un espacio de trabajo abierto, colaborativo y tecnológicamente avanzado. El proyecto incluyó la optimización de áreas, nuevo mobiliario y soluciones de automatización.">
+                        <img src="https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagen de oficinas modernas y colaborativas" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4 md:p-6 text-white">
+                            <h3 class="font-display text-2xl md:text-3xl">Oficinas Innovatec</h3>
+                            <p class="text-sm">Grupo Éxito</p>
+                        </div>
+                    </div>
+                    <!-- Proyecto 2 -->
+                    <div class="project-card col-span-1 cursor-pointer group relative rounded-lg overflow-hidden shadow-lg"
+                         data-img="https://images.pexels.com/photos/6782567/pexels-photo-6782567.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                         data-title="Showroom 'Origen'"
+                         data-client="Para Haceb"
+                         data-description="Diseño y construcción de un nuevo showroom de 800 m² para la línea premium de electrodomésticos. Se priorizó una experiencia de usuario inmersiva con materiales de alta gama y un diseño de iluminación especializado.">
+                        <img src="https://images.pexels.com/photos/6782567/pexels-photo-6782567.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagen de cocina de exhibición moderna y elegante" class="w-full h-full object-cover aspect-[1/1]">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4 text-white">
+                            <h3 class="font-display text-2xl">Showroom Origen</h3>
+                            <p class="text-sm">Haceb</p>
+                        </div>
+                    </div>
+                    <!-- Proyecto 3 -->
+                    <div class="project-card col-span-1 md:col-span-2 lg:col-span-1 cursor-pointer group relative rounded-lg overflow-hidden shadow-lg"
+                         data-img="https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                         data-title="Adecuación Residencial"
+                         data-client="Para Familia Restrepo"
+                         data-description="Remodelación completa de un apartamento de 250 m², enfocada en la creación de espacios abiertos, luminosos y funcionales. Se realizó un cambio total de acabados, carpintería a medida y diseño de iluminación.">
+                        <img src="https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagen de sala de estar elegante y minimalista" class="w-full h-full object-cover aspect-[1/1] md:aspect-auto">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4 text-white">
+                            <h3 class="font-display text-2xl">Residencia El Poblado</h3>
+                            <p class="text-sm">Cliente Particular</p>
+                        </div>
+                    </div>
+                    <!-- Proyecto 4 -->
+                    <div class="project-card col-span-2 md:col-span-2 lg:col-span-2 cursor-pointer group relative rounded-lg overflow-hidden shadow-lg"
+                         data-img="https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                         data-title="Restaurante 'Fonda del Alma'"
+                         data-client="Para Cadena Hotelera"
+                         data-description="Construcción de un restaurante temático de 400 m² dentro de un hotel. El proyecto abarcó desde la obra civil hasta el diseño de interiores, mobiliario y la instalación de cocinas industriales.">
+                        <img src="https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagen de interior de un restaurante rústico y acogedor" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4 md:p-6 text-white">
+                            <h3 class="font-display text-2xl md:text-3xl">Restaurante Fonda del Alma</h3>
+                            <p class="text-sm">Sector Hotelero</p>
+                        </div>
+                    </div>
+                     <!-- Proyecto 5 -->
+                    <div class="project-card col-span-1 cursor-pointer group relative rounded-lg overflow-hidden shadow-lg"
+                         data-img="https://raw.githubusercontent.com/Claudidu/consof/main/images/Crea%20una%20imagen%20para%20la%20portada%20web%20de%20un%20proyecto%20llamado%20Adecuaci%C3%B3n%20Sala%20VIP%20(Avianca).%20que%20muestre%20%20Una%20sala%20de%20espera%20de%20aeropuerto%20moderna%2C%20limpia%20y%20confortable.%20medidas_%20800%20x%20800%20p%C3%AD.jpg"
+                         data-title="Adecuación Sala VIP"
+                         data-client="Para Avianca"
+                         data-description="Mantenimiento y actualización de la Sala VIP del aeropuerto, mejorando la experiencia del pasajero con nuevas zonas de descanso, puntos de carga y un diseño más moderno y confortable.">
+                        <img src="https://raw.githubusercontent.com/Claudidu/consof/main/images/Crea%20una%20imagen%20para%20la%20portada%20web%20de%20un%20proyecto%20llamado%20Adecuaci%C3%B3n%20Sala%20VIP%20(Avianca).%20que%20muestre%20%20Una%20sala%20de%20espera%20de%20aeropuerto%20moderna%2C%20limpia%20y%20confortable.%20medidas_%20800%20x%20800%20p%C3%AD.jpg" alt="Imagen de una sala de espera moderna y vacía" class="w-full h-full object-cover aspect-[1/1]">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4 text-white">
+                            <h3 class="font-display text-2xl">Sala VIP El Dorado</h3>
+                            <p class="text-sm">Avianca</p>
+                        </div>
+                    </div>
+                     <!-- Proyecto 6 -->
+                    <div class="project-card col-span-1 cursor-pointer group relative rounded-lg overflow-hidden shadow-lg"
+                         data-img="https://images.pexels.com/photos/3861976/pexels-photo-3861976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                         data-title="Planta Industrial"
+                         data-client="Para Sector Industrial"
+                         data-description="Consultoría técnica y ejecución de obras de mantenimiento correctivo en una planta de producción, incluyendo reparaciones estructurales y actualización de redes eléctricas y de datos para optimizar la operación.">
+                        <img src="https://images.pexels.com/photos/3861976/pexels-photo-3861976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagen de un interior de una fábrica o planta industrial" class="w-full h-full object-cover aspect-[1/1]">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4 text-white">
+                            <h3 class="font-display text-2xl">Planta Itagüí</h3>
+                            <p class="text-sm">Sector Industrial</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL / BURBUJA DE DIÁLOGO -->
+    <div id="project-modal" class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="modal-content bg-white w-full max-w-4xl rounded-lg shadow-2xl overflow-hidden flex flex-col md:flex-row scale-95">
+            <div class="w-full md:w-1/2">
+                <img id="modal-img" src="" alt="Imagen del proyecto seleccionado" class="w-full h-64 md:h-full object-cover">
+            </div>
+            <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col">
+                <div class="flex-grow">
+                    <h2 id="modal-title" class="font-display text-3xl md:text-4xl text-consof-dark"></h2>
+                    <p id="modal-client" class="text-lg text-gray-500 mb-4"></p>
+                    <p id="modal-description" class="text-gray-700 leading-relaxed"></p>
+                </div>
+                <button id="modal-close-btn" class="mt-6 bg-consof-orange text-white font-display text-xl px-6 py-2 rounded-md self-start hover:bg-opacity-90">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER (Reutilizado) -->
+    <footer class="bg-consof-dark text-gray-400">
+        <div class="container mx-auto px-4 md:px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+            <div class="md:col-span-1"><div class="flex justify-center md:justify-start items-center space-x-2 mb-4"><svg width="24" height="24" viewBox="0 0 100 100" class="text-white"><path fill="#FFFFFF" d="M50 80 L50 100 L40 100 L40 80 Z"></path><path fill="#FFFFFF" d="M25 65 L10 75 L18 85 L33 75 Z"></path><path fill="#FFFFFF" d="M20 50 L0 50 L0 40 L20 40 Z"></path><path fill="#FFFFFF" d="M25 35 L10 25 L18 15 L33 25 Z"></path><path fill="#F78D53" d="M50 20 L50 0 L60 0 L60 20 Z"></path><g transform="translate(70, 20)"><path fill="#FFFFFF" d="M15.31,0H9.69A3.13,3.13,0,0,0,6.56,3.13V5.62H18.44V3.13A3.13,3.13,0,0,0,15.31,0Z"></path><path fill="#FFFFFF" d="M25,8.75H0v3.12A3.13,3.13,0,0,0,3.13,15H21.88A3.13,3.13,0,0,0,25,11.88V8.75Z"></path></g></svg><span class="font-display text-2xl text-white">CONSOF</span></div><p class="text-sm">Transformando ideas en espacios con alma. Del concepto al concreto.</p></div>
+            <div><h4 class="font-display text-xl text-white mb-4">Explorar</h4><ul class="space-y-2 text-sm"><li><a href="#" class="hover:text-orange-400 transition-colors">Nosotros</a></li><li><a href="#" class="hover:text-orange-400 transition-colors">Servicios</a></li><li><a href="#" class="hover:text-orange-400 transition-colors">Proyectos</a></li></ul></div>
+            <div><h4 class="font-display text-xl text-white mb-4">Contacto</h4><ul class="space-y-2 text-sm"><li>Sede: Medellín, Colombia</li><li>gerencia@consof.com.co</li><li>Lun - Vie, 8am - 5pm</li></ul></div>
+            <div><h4 class="font-display text-xl text-white mb-4">Síguenos</h4><div class="flex justify-center md:justify-start space-x-4"><a href="#" class="hover:text-white transition-colors">[Be]</a><a href="#" class="hover:text-white transition-colors">[In]</a><a href="#" class="hover:text-white transition-colors">[Ig]</a></div></div>
+        </div>
+         <div class="border-t border-white/10 mt-8"><div class="container mx-auto px-6 py-6 text-center text-xs"><p>&copy; 2025 CONSOF. Todos los derechos reservados.</p></div></div>
+    </footer>
+    
+    <script>
+        // Script para la funcionalidad del menú móvil
+        const openMenuBtn = document.getElementById('menu-open-btn');
+        const closeMenuBtn = document.getElementById('menu-close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        openMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+        });
+
+        // Script para el modal de proyectos
+        const projectCards = document.querySelectorAll('.project-card');
+        const modal = document.getElementById('project-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalTitle = document.getElementById('modal-title');
+        const modalClient = document.getElementById('modal-client');
+        const modalDescription = document.getElementById('modal-description');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+
+        projectCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Obtener datos de la tarjeta clickeada
+                const img = card.dataset.img; // Usamos el atributo data-img para el modal
+                const title = card.dataset.title;
+                const client = card.dataset.client;
+                const description = card.dataset.description;
+
+                // Poblar el modal con los datos
+                modalImg.src = img;
+                modalTitle.textContent = title;
+                modalClient.textContent = client;
+                modalDescription.textContent = description;
+
+                // Mostrar el modal
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => {
+                    modal.querySelector('.modal-content').classList.remove('scale-95');
+                }, 50); // Pequeño delay para la animación
+            });
+        });
+
+        // Función para cerrar el modal
+        const closeModal = () => {
+            modal.querySelector('.modal-content').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300); // Coincide con la duración de la transición
+        };
+
+        modalCloseBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            // Cerrar si se hace clic en el overlay de fondo
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+    </script>
+
+</body>
+</html>
