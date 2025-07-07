@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONSOF - Servicios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tipografías y Colores del Brand Book */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9FAFB; /* Un gris muy claro para el fondo */
+        }
+        .font-display { 
+            font-family: 'Teko', sans-serif;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .bg-consof-dark { background-color: #374548; }
+        .text-consof-dark { color: #374548; }
+        .bg-consof-orange { background-color: #F78D53; }
+        .text-consof-orange { color: #F78D53; }
+        .bg-consof-grey { background-color: #ADB9BA; }
+        .text-consof-grey { color: #ADB9BA; }
+        .border-consof-orange { border-color: #F78D53; }
+
+        /* Estilos para el acordeón de servicios */
+        .service-card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+        }
+        .service-card.is-open .service-card-content {
+            max-height: 500px; /* Altura suficiente para el contenido */
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+        .service-card.is-open .chevron-icon {
+            transform: rotate(180deg);
+        }
+        .chevron-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-consof-dark">
+
+    <!-- MENÚ OVERLAY MÓVIL (Reutilizado) -->
+    <div id="mobile-menu" class="menu-overlay fixed inset-0 bg-consof-dark z-50 flex-col items-center justify-center text-white hidden md:hidden">
+        <button id="menu-close-btn" class="absolute top-5 right-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+        <nav class="flex flex-col items-center space-y-8">
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Inicio</a>
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Nosotros</a>
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Servicios</a>
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Proyectos</a>
+            <a href="#" class="font-display text-5xl hover:text-consof-orange transition-colors">Recursos</a>
+            <a href="#" class="font-display text-5xl bg-consof-orange text-white px-8 py-2 rounded-md mt-8">Contacto</a>
+        </nav>
+    </div>
+
+    <!-- HEADER RESPONSIVE (Reutilizado) -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
+        <div class="container mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                 <svg width="40" height="40" viewBox="0 0 100 100" class="text-consof-dark h-8 w-8 md:h-10 md:w-10">
+                    <path fill="#374548" d="M50 80 L50 100 L40 100 L40 80 Z"></path><path fill="#374548" d="M25 65 L10 75 L18 85 L33 75 Z"></path><path fill="#374548" d="M20 50 L0 50 L0 40 L20 40 Z"></path><path fill="#374548" d="M25 35 L10 25 L18 15 L33 25 Z"></path><path fill="#F78D53" d="M50 20 L50 0 L60 0 L60 20 Z"></path><g transform="translate(70, 20)"><path fill="#374548" d="M15.31,0H9.69A3.13,3.13,0,0,0,6.56,3.13V5.62H18.44V3.13A3.13,3.13,0,0,0,15.31,0Z"></path><path fill="#374548" d="M25,8.75H0v3.12A3.13,3.13,0,0,0,3.13,15H21.88A3.13,3.13,0,0,0,25,11.88V8.75Z"></path></g>
+                </svg>
+                <span class="font-display text-3xl md:text-4xl text-consof-dark">CONSOF</span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#" class="font-display text-xl tracking-wider hover:text-consof-orange transition-colors">Inicio</a>
+                <a href="#" class="font-display text-xl tracking-wider hover:text-consof-orange transition-colors">Nosotros</a>
+                <a href="#" class="font-display text-xl tracking-wider text-consof-orange transition-colors">Servicios</a>
+                <a href="#" class="font-display text-xl tracking-wider hover:text-orange transition-colors">Proyectos</a>
+                <a href="#" class="font-display text-xl tracking-wider hover:text-orange transition-colors">Recursos</a>
+            </nav>
+            <a href="#" class="hidden md:block bg-consof-orange text-white font-display text-xl px-6 py-2 rounded-md hover:bg-opacity-90 transition-all transform hover:scale-105">Contacto</a>
+            <button id="menu-open-btn" class="md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Contenido de la página "Servicios" -->
+    <main>
+        <!-- HERO SECTION "SERVICIOS" -->
+        <section class="relative h-[50vh] min-h-[400px] flex items-center justify-center text-white bg-consof-dark">
+            <div class="absolute inset-0 opacity-20" style="background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop'); background-size: cover; background-position: center;"></div>
+            <div class="absolute inset-0 bg-black/40 z-10"></div>
+            <div class="z-20 text-center px-4">
+                <h1 class="font-display text-6xl md:text-8xl">Nuestros Servicios</h1>
+                <p class="mt-2 text-xl md:text-2xl font-light">Soluciones integrales que cierran la brecha entre diseño y obra.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE TARJETAS DE SERVICIOS -->
+        <section class="py-16 md:py-24">
+            <div class="container mx-auto px-4 md:px-6 max-w-4xl">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="font-display text-5xl md:text-6xl text-consof-dark">Un Servicio para cada Necesidad</h2>
+                    <p class="mt-4 text-lg text-gray-600">Haz clic en cada servicio para conocer más detalles.</p>
+                </div>
+
+                <div id="services-accordion" class="space-y-4">
+                    
+                    <!-- Card 1: Diseño y construcción -->
+                    <div class="service-card bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+                        <button class="service-card-header w-full flex justify-between items-center p-6 text-left">
+                            <div class="flex items-center gap-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-consof-orange flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2 1M4 7l2-1M4 7v2.5M12 21.75l-3.75-1.5L12 18l3.75 2.25L12 21.75zM12 12.75l-3.75-1.5L12 9l3.75 2.25L12 12.75zM12 3.75l-3.75-1.5L12 0l3.75 2.25L12 3.75z"/></svg>
+                                <h3 class="font-display text-2xl md:text-3xl text-consof-dark">Diseño y construcción de proyectos civiles</h3>
+                            </div>
+                            <svg class="chevron-icon h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </button>
+                        <div class="service-card-content px-6">
+                            <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                                <li>Diseño arquitectónico.</li>
+                                <li>Construcción de obra nueva (comercial, residencial y corporativa).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Remodelación -->
+                    <div class="service-card bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+                        <button class="service-card-header w-full flex justify-between items-center p-6 text-left">
+                            <div class="flex items-center gap-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-consof-orange flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118L2.05 10.1c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.95-.69L11.049 2.927z"/></svg>
+                                <h3 class="font-display text-2xl md:text-3xl text-consof-dark">Remodelación y adecuaciones integrales</h3>
+                            </div>
+                            <svg class="chevron-icon h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </button>
+                        <div class="service-card-content px-6">
+                            <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                                <li>Intervenciones para expansión de marca, optimización de espacios o actualización de imagen.</li>
+                                <li>Reformas en oficinas, locales comerciales, restaurantes, hoteles.</li>
+                                <li>Obras civiles menores y adecuaciones personalizadas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3: Mantenimiento -->
+                    <div class="service-card bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+                        <button class="service-card-header w-full flex justify-between items-center p-6 text-left">
+                            <div class="flex items-center gap-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-consof-orange flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                                <h3 class="font-display text-2xl md:text-3xl text-consof-dark">Mantenimiento locativo (preventivo y correctivo)</h3>
+                            </div>
+                            <svg class="chevron-icon h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </button>
+                        <div class="service-card-content px-6">
+                            <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                                <li>Mantenimiento programado de espacios industriales y comerciales.</li>
+                                <li>Reparaciones civiles, eléctricas, sanitarias, acabados.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Consultoría -->
+                    <div class="service-card bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+                        <button class="service-card-header w-full flex justify-between items-center p-6 text-left">
+                            <div class="flex items-center gap-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-consof-orange flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                                <h3 class="font-display text-2xl md:text-3xl text-consof-dark">Consultoría técnica</h3>
+                            </div>
+                            <svg class="chevron-icon h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </button>
+                        <div class="service-card-content px-6">
+                            <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                                <li>Análisis normativo, diseño técnico y viabilidad constructiva.</li>
+                                <li>Asesoría en etapas tempranas del proyecto.</li>
+                                <li>Planeación y dirección de obra desde una visión 360°.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Soluciones especializadas -->
+                    <div class="service-card bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+                        <button class="service-card-header w-full flex justify-between items-center p-6 text-left">
+                            <div class="flex items-center gap-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-consof-orange flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                                <h3 class="font-display text-2xl md:text-3xl text-consof-dark">Soluciones técnicas especializadas</h3>
+                            </div>
+                            <svg class="chevron-icon h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </button>
+                        <div class="service-card-content px-6">
+                            <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                                <li>Instalaciones eléctricas, hidráulicas, sanitarias y de redes de gas.</li>
+                                <li>Sistemas de ventilación, aire acondicionado y redes contra incendio.</li>
+                                <li>Redes de datos, CCTV, automatización, cerraduras electrónicas.</li>
+                                <li>Carpintería metálica y en madera, mobiliario.</li>
+                                <li>Señalética y diseño gráfico corporativo en espacios.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER (Reutilizado) -->
+    <footer class="bg-consof-dark text-consof-grey">
+        <div class="container mx-auto px-4 md:px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+            <div class="md:col-span-1"><div class="flex justify-center md:justify-start items-center space-x-2 mb-4"><svg width="24" height="24" viewBox="0 0 100 100" class="text-white"><path fill="#FFFFFF" d="M50 80 L50 100 L40 100 L40 80 Z"></path><path fill="#FFFFFF" d="M25 65 L10 75 L18 85 L33 75 Z"></path><path fill="#FFFFFF" d="M20 50 L0 50 L0 40 L20 40 Z"></path><path fill="#FFFFFF" d="M25 35 L10 25 L18 15 L33 25 Z"></path><path fill="#F78D53" d="M50 20 L50 0 L60 0 L60 20 Z"></path><g transform="translate(70, 20)"><path fill="#FFFFFF" d="M15.31,0H9.69A3.13,3.13,0,0,0,6.56,3.13V5.62H18.44V3.13A3.13,3.13,0,0,0,15.31,0Z"></path><path fill="#FFFFFF" d="M25,8.75H0v3.12A3.13,3.13,0,0,0,3.13,15H21.88A3.13,3.13,0,0,0,25,11.88V8.75Z"></path></g></svg><span class="font-display text-2xl text-white">CONSOF</span></div><p class="text-sm">Transformando ideas en espacios con alma. Del concepto al concreto.</p></div>
+            <div><h4 class="font-display text-xl text-white mb-4">Explorar</h4><ul class="space-y-2 text-sm"><li><a href="#" class="hover-text-orange transition-colors">Nosotros</a></li><li><a href="#" class="hover-text-orange transition-colors">Servicios</a></li><li><a href="#" class="hover-text-orange transition-colors">Proyectos</a></li></ul></div>
+            <div><h4 class="font-display text-xl text-white mb-4">Contacto</h4><ul class="space-y-2 text-sm"><li>Sede: Medellín, Colombia</li><li>gerencia@consof.com.co</li><li>Lun - Vie, 8am - 5pm</li></ul></div>
+            <div><h4 class="font-display text-xl text-white mb-4">Síguenos</h4><div class="flex justify-center md:justify-start space-x-4"><a href="#" class="text-consof-grey hover:text-white transition-colors">[Be]</a><a href="#" class="text-consof-grey hover:text-white transition-colors">[In]</a><a href="#" class="text-consof-grey hover:text-white transition-colors">[Ig]</a></div></div>
+        </div>
+         <div class="border-t border-white/10 mt-8"><div class="container mx-auto px-6 py-6 text-center text-xs"><p>&copy; 2025 CONSOF. Todos los derechos reservados.</p></div></div>
+    </footer>
+    
+    <script>
+        // Script para la funcionalidad del menú móvil
+        const openMenuBtn = document.getElementById('menu-open-btn');
+        const closeMenuBtn = document.getElementById('menu-close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        openMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+        });
+
+        // Script para el acordeón de servicios
+        const accordion = document.getElementById('services-accordion');
+        accordion.addEventListener('click', (e) => {
+            const header = e.target.closest('.service-card-header');
+            if (!header) return;
+
+            const card = header.parentElement;
+            const isOpen = card.classList.contains('is-open');
+
+            // Opcional: cerrar todas las demás tarjetas
+            Array.from(accordion.children).forEach(child => {
+                child.classList.remove('is-open');
+            });
+
+            // Abrir la tarjeta clicada (si no estaba ya abierta)
+            if (!isOpen) {
+                card.classList.add('is-open');
+            }
+        });
+    </script>
+
+</body>
+</html>
